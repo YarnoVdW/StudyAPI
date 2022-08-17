@@ -10,3 +10,9 @@ type StudyItem struct {
 type Base struct {
 	ID uint `gorm:"primary_key" json:"id"`
 }
+
+type User struct {
+	Base
+	Username string `json:"username"`
+	Password string `json:"password"`
+}

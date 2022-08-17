@@ -18,3 +18,8 @@ func Init() *gorm.DB {
 func GetDb() *gorm.DB {
 	return DB
 }
+
+const (
+	IdentityKey = "id"
+	Key         = "secret_key_1911"
+)
