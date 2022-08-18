@@ -9,8 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupAuth() (*jwtapple2.GinJWTMiddelware, error) {
-	authMiddleware, err := jwtapple2.New(&jwtapple2.GinJWTMiddelware{
+func SetupAuth() (*jwtapple2.GinJWTMiddleware, error) {
+	authMiddleware, err := jwtapple2.New(&jwtapple2.GinJWTMiddleware{
 		Realm:           "apistudy",
 		Key:             []byte(config.Key),
 		Timeout:         time.Hour * 24,     //life time of generated token
@@ -62,4 +62,28 @@ func authenticator(c *gin.Context) (interface{}, error) {
 	}
 
 	return &result, nil
+}
+
+// call back func that performs the authorization of the authenticated user
+// called only after an authentication success.
+func authorizator(data interface{}, c *gin.Context) bool {
+	if v, ok := data.(model.User); ok && v.ID != 0 {
+		return true
+	}
+	return false
+}
+
+// returns error message
+func unauthorized(c *gin.Context, code int, message string) {
+	c.JSON(code, gin.H{
+		"message": message,
+	})
+}
+
+// custom response when login is a success
+func loginResponse(c *gin.Context, code int, token string, expire time.Time) {
+	c.JSON(code, gin.H{
+		"expire": expire,
+		"token":  token,
+	})
 }

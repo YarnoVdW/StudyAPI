@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type StudyItem struct {
 	Base
 	ID            uint   `gorm:"primary_key" json:"id"`
@@ -8,7 +10,10 @@ type StudyItem struct {
 }
 
 type Base struct {
-	ID uint `gorm:"primary_key" json:"id"`
+	ID        uint      `gorm:"primary_key" json:"id"`
+	CreatedAt time.Time `json:"created_at`
+	UpdatedAt time.Time `json:"updated_at`
+	DeletedAt time.Time `json:"deleted_at`
 }
 
 type User struct {
