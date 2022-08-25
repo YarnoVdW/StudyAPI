@@ -1,0 +1,32 @@
+version: '3'
+services:
+   go:
+     image: golang:1.13
+     container_name: StudyAPI
+     volumes:
+       - .:/StudyAPI
+     working_dir: /Users/yarnovandeweyer/AndroidStudioProjects/go-service/cmd/service
+     command: ./build.sh
+     links:
+       - postgres
+     ports:
+       - 8080:8080
+   postgres:
+       image: postgres:11.2-alpine
+       container_name: postgresStudy
+       restart: always
+       environment:
+        POSTGRES_DB: StudyItem
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: yarno
+       ports:
+        - 5432:5432
+       volumes:
+        - ./db:/postgres
+
+
+
+
+
+
+
